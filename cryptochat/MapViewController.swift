@@ -10,63 +10,58 @@ import UIKit
 import GoogleMaps
 import CoreLocation
 
+
 class MapViewController: UIViewController, CLLocationManagerDelegate {
     
     
     
     var locationManager = CLLocationManager()
-    var x = 0.0
-    var y = 0.0
-    var x2 = 1.1
-    var y2 = 1.1
+    var didFindMyLocation = false
     
     
+    @IBOutlet weak var mapView: GMSMapView!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestAlwaysAuthorization()
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
-        
-        // Do any additional setup after loading the view, typically from a nib.
-        
-        // Dispose of any resources that can be recreated.
-        let camera = GMSCameraPosition.cameraWithLatitude(x, longitude: y, zoom: 6)
-        let mapView = GMSMapView.mapWithFrame(CGRectZero, camera: camera)
+//        locationManager.delegate = self
+//        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+//        locationManager.requestAlwaysAuthorization()
+//        locationManager.requestWhenInUseAuthorization()
+//        locationManager.startUpdatingLocation()
+        let camera = GMSCameraPosition.cameraWithLatitude(33.7, longitude: -77.4, zoom: 8.0)
+        mapView.camera = camera
         mapView.myLocationEnabled = true
-        print(mapView.myLocation)
         
-        self.view = mapView
-        
-        let marker = GMSMarker()
-        marker.position = CLLocationCoordinate2DMake(x, y)
-        marker.title = "user"
-        marker.snippet = "somewhere"
-        marker.map = mapView
-        
-        
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        mapView.addObserver(self, forKeyPath: "myLocation", options: NSKeyValueObservingOptions.New, context: nil)
         
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        
-        
     }
     
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        x2 = (manager.location?.coordinate.latitude)!
-        y2 = (manager.location?.coordinate.longitude)!
-        print(x2, y2)
-        if(x2 != x) || (y2 != y) {
-            x = x2
-            y = y2
-            viewDidLoad()
+    
+    func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        if status == CLAuthorizationStatus.AuthorizedWhenInUse {
+            mapView.myLocationEnabled = true
         }
     }
+    
+    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+        if !didFindMyLocation {
+            let myLocation: CLLocation = (change![NSKeyValueChangeNewKey] as? CLLocation)!
+            mapView.camera = GMSCameraPosition.cameraWithTarget(myLocation.coordinate, zoom: 10.0)
+            mapView.settings.myLocationButton = true
+            
+            didFindMyLocation = true
+        }
+    }
+    
+    
+
     
 }

@@ -88,5 +88,9 @@ class ConversationInboxViewController: UIViewController, UITableViewDataSource, 
         self.performSegueWithIdentifier("toConvo", sender: self)
 
     }
+    
+    func goToMap(user: User) {
+        self.performSegueWithIdentifier("toMap", sender: self)
+    }
 
 }

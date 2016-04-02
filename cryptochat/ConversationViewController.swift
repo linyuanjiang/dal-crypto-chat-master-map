@@ -23,6 +23,8 @@ class ConversationViewController: UIViewController, UITableViewDelegate, UITable
     var latestMessageTime : String?
     var imagePicker: UIImagePickerController!
     
+    @IBOutlet weak var Share: UIBarButtonItem!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableMessages.dataSource = self

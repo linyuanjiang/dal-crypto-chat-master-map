@@ -300,7 +300,7 @@
                     <navigationItem key="navigationItem" title="Title" id="TI9-lk-k6T">
                         <barButtonItem key="rightBarButtonItem" title="Share" id="P85-d1-diZ">
                             <connections>
-                                <segue destination="pkS-3R-68b" kind="show" id="EAg-VG-xP7"/>
+                                <segue destination="pkS-3R-68b" kind="show" identifier="toMap" id="EAg-VG-xP7"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -310,7 +310,7 @@
                         <outlet property="bottomConstraint" destination="uEO-Fj-kbO" id="ekc-IR-Zyc"/>
                         <outlet property="tableMessages" destination="gEZ-jb-cKn" id="rfb-xi-CRL"/>
                         <outlet property="userTextField" destination="54k-Ov-cWp" id="83W-tn-Lae"/>
-                        <segue destination="pkS-3R-68b" kind="show" id="PEV-zd-3PW"/>
+                        <segue destination="pkS-3R-68b" kind="show" identifier="toMap" id="yGf-Ju-REw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GFS-xd-bOV" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -328,8 +328,20 @@
                     <view key="view" contentMode="scaleToFill" id="SV7-cQ-0Sk">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="800"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pAH-f0-xD8" customClass="GMSMapView">
+                                <rect key="frame" x="41" y="108" width="399" height="530"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="pAH-f0-xD8" firstAttribute="centerX" secondItem="SV7-cQ-0Sk" secondAttribute="centerX" id="ze8-BW-tQs"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="mapView" destination="pAH-f0-xD8" id="TQe-js-Kua"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C2X-fO-zrp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -499,7 +511,7 @@
         <image name="setting" width="16" height="16"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="mHI-cG-AzO"/>
-        <segue reference="PEV-zd-3PW"/>
+        <segue reference="lVx-OX-NvA"/>
+        <segue reference="yGf-Ju-REw"/>
     </inferredMetricsTieBreakers>
 </document>
